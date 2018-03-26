@@ -1,0 +1,100 @@
+{% extends "@MediaRemote/header.html.twig" %}
+{% block title %}Un Titre {{ parent() }} {% endblock %}
+{% block main %}
+
+
+
+{# {{ form_widget(form) }}#}
+{# {{ form_errors(form) }}#}
+{# {{ form_label(form) }}#}
+{# <button>submit</button>#}
+
+
+
+<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col" id="remotesubmit">
+{% include"@MediaRemote/form/start-card.html.twig" %}
+
+    <div class="ui bigger mdl-cell mdl-cell--12-col">
+        <div class="ui bigger light mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
+   {% include"@MediaRemote/form/errors/heading.html.twig" %} 
+           
+  {% include"@MediaRemote/Remote/form/widget/textfield.html.twig" %}
+  {% include"@MediaRemote/Remote/form/label/textfield.html.twig" %}
+  <span class="mdl-textfield__error">Only alphabet between 3 and 16 characters</span>
+  
+        </div>
+        <br>
+        <br>
+        <div class="light mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
+        <i class="material-icons">restore</i>
+         {% include"@MediaRemote/Remote/form/widget/numberfield.html.twig" %}
+  {% include"@MediaRemote/Remote/form/label/numberfield.html.twig" %}
+	    <span class="mdl-textfield__error">Only digit between 1 and 24</span>
+        </div>
+       <script>
+       
+ 	     var remotesubmit = window.document.getElementById("remotesubmit");
+        var input = remotesubmit.getElementsByTagName("input");
+        
+ //       var input = window.document.querySelectorAll("#remotesubmit input");
+        input[0].onkeyup = input[1].onkeyup = function(e){
+        	if(e.keyCode ===13){
+        this.parentNode.parentNode.parentNode.submit();
+        	}
+        }
+        {%  if not is_granted('ROLE_SUPER_ADMIN') %}
+ //mm ecriture avec une boucle       
+// 		for (var i=0, l=input.length;i<l;i++){
+// 			input[i].onfocus = function(e){
+// 				this.blur();}
+// 			}
+ 		
+        input[0].onfocus = input[1].onfocus = function(e){
+		this.blur();	// descative le clic
+		window.ui.dialog.emergency("Acces interdit", "Vous n'avez pas les droits").onconfirm();
+            }
+         
+        {% endif %}
+        </script>   
+        
+    </div>
+{% include"@MediaRemote/form/end.html.twig" %}
+{#     </form>#}
+    <div class="mdl-card__actions mdl-card--border">
+        <a href=""
+           class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          24 playing
+        </a>
+    </div>
+</div>
+
+<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+    <ul class="mdl-list">
+{% for value in mediaRemote %}
+      <li class="mdl-list__item bg-grey-200">
+        <span class="mdl-list__item-primary-content">
+          <i class="material-icons  mdl-list__item-avatar ui bg-indigo-500">chevron_right</i>
+          {{ value.getMedia().getMediaName() }}
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" class="mdl-switch__input"
+            onchange="window.document.location.href='{{ path("toogle",{
+                        'remote_name': value.getRemote().getRemoteName(),
+                        'media_name': value.getMedia().getMediaName()
+                        })
+                    }}';"
+                    
+             {% if value.getMediaRemoteActive() %}
+             checked
+             {% endif %}
+             
+             />
+          </label>
+        </span>
+      </li>
+{% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

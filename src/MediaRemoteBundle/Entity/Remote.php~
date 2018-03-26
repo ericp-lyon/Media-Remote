@@ -1,0 +1,40 @@
+<?php
+
+namespace MediaRemoteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Remote
+ *
+ * @ORM\Table(name="remote", uniqueConstraints={@ORM\UniqueConstraint(name="remote_name", columns={"remote_name"})})
+ * @ORM\Entity
+ */
+class Remote
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remote_name", type="string", length=255, nullable=false)
+     */
+    private $remoteName;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remote_duration", type="integer", nullable=false)
+     */
+    private $remoteDuration;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remote_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $remoteId;
+
+
+}
+

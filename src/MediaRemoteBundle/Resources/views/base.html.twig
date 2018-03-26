@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link	href="{{ asset('bundles/mediaremote/node_modules/material-design-lite/material.min.css') }}"
+        	rel="stylesheet"
+        	type="text/css">
+          <link	href="{{ asset('bundles/mediaremote/node_modules/material-design-icons/iconfont/material-icons.css') }}"
+        	rel="stylesheet"
+        	type="text/css">
+        	 <link	href="{{ asset('bundles/mediaremote/node_modules/ui-design/dist/ui-design.css') }}"
+        	rel="stylesheet"
+        	type="text/css">
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+           <script type="text/javascript"
+           				src="{{ asset('bundles/mediaremote/node_modules/material-design-lite/material.min.js') }}"></script>
+           <script type="text/javascript"
+           				src="{{ asset('bundles/mediaremote/node_modules/ui-design/dist/ui-design.js') }}"></script>
+           
+           
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
